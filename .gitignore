@@ -1,0 +1,22 @@
+# Credentials & secrets
+secrets/
+*.json
+*.key
+*.pem
+
+# Downloaded data
+data/
+
+# Airflow logs
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Jupyter
+notebooks/.ipynb_checkpoints/
+notebooks/.venv/
+notebooks/uv.lock
