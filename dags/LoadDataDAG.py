@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 
 from scripts.getData import getDataFromBucketToLocal
 from scripts.createSchema import getDataFromLocalForSchemaExtractionAndCreateTableToBigQuery
-
+from scripts.loadDataToStaging import loadDataToStaging
 
 default_args = {
     'owner': 'airflow',
@@ -32,9 +32,17 @@ def task2_wrapper():
     log.info("Starting Task 2: Extracting schema and creating table in BigQuery.")
     import os
     directory = "/tmp/data/"
-    files = [os.path.join(directory, f) for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
+    files = [os.path.join(directory, f) for f in os.listdir(directory) if f.endswith(('.parquet', '.csv'))]
     getDataFromLocalForSchemaExtractionAndCreateTableToBigQuery(
         files=files
+    )
+
+def task3_wrapper():
+    log.info("Starting Task 3: Loading the data to the table.")
+    import os
+    directory = "/tmp/data/"
+    loadDataToStaging(
+        files=[os.path.join(directory, f) for f in os.listdir(directory) if f.endswith(('.parquet', '.csv'))]
     )
 
 
@@ -54,4 +62,9 @@ with DAG(
         python_callable=task2_wrapper,
     )
     
-    task1 >> task2
+    task3 = PythonOperator(
+        task_id='task3_load',
+        python_callable=task3_wrapper,
+    )
+
+    task1 >> task2 >> task3 
