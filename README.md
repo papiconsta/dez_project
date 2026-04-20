@@ -136,6 +136,18 @@ Open `http://<your-vm-ip>:8501`
 
 ---
 
+## Dashboard
+
+![Dashboard](images/Screenshot_2026-04-20_23-14-08.png)
+
+The Streamlit dashboard connects directly to BigQuery and visualizes the aggregated mart tables:
+
+- **Spend by Department** — bar chart showing total contract spend per government department (e.g. DND dominates at ~$100B)
+- **Top Vendors by Contract Value** — General Dynamics leads with ~$35B, followed by Canadian Corp and Lockheed Martin
+- **Spend by Category** — table breakdown by contract type: Ships & boats ($18.8B), Protection services ($18.7B), Combat vehicles ($15B)
+
+---
+
 ## Pipeline DAG Flow
 
 ```
