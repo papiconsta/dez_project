@@ -136,6 +136,23 @@ Open `http://<your-vm-ip>:8501`
 
 ---
 
+## Airflow DAGs
+
+### DAGs Overview
+![Airflow DAGs](images/Screenshot_2026-04-20_23-23-24.png)
+
+3 active DAGs orchestrate the full pipeline — `first_dag_DEZ` runs on a daily schedule and automatically triggers the dbt DAGs on success.
+
+### first_dag_DEZ — Ingestion Pipeline
+![first_dag_DEZ](images/Screenshot_2026-04-20_23-22-54.png)
+
+3 tasks built with `PythonOperator`:
+- `task1_fetch` — downloads data from GCS
+- `task2_schema` — extracts schema and creates BigQuery tables
+- `task3_load` — loads data to BigQuery staging
+
+---
+
 ## Dashboard
 
 ![Dashboard](images/Screenshot_2026-04-20_23-14-08.png)
