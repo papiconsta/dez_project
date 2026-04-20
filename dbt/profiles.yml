@@ -1,0 +1,22 @@
+dez_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: dataengineeringproject-493216
+      dataset: dbt_dev
+      keyfile: ../secrets/service-account.json
+      threads: 4
+      timeout_seconds: 300
+      location: europe-west1
+
+    prod:
+      type: bigquery
+      method: service-account
+      project: dataengineeringproject-493216
+      dataset: dbt_prod
+      keyfile: ../secrets/service-account.json
+      threads: 4
+      timeout_seconds: 300
+      location: europe-west1

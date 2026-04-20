@@ -1,0 +1,37 @@
+version: '3.8'
+
+x-dbt-common: &dbt-common
+  build:
+    context: .
+    dockerfile: Dockerfile
+  volumes:
+    - ./dez_dbt:/dbt/dez_dbt
+    - ./profiles.yml:/dbt/profiles.yml:ro
+    - ../../secrets:/secrets:ro
+  environment:
+    GOOGLE_APPLICATION_CREDENTIALS: /secrets/service-account.json
+  working_dir: /dbt/dez_dbt
+
+services:
+
+  dbt-debug:
+    <<: *dbt-common
+    command: dbt debug
+
+  dbt-run:
+    <<: *dbt-common
+    command: dbt run
+
+  dbt-test:
+    <<: *dbt-common
+    command: dbt test
+
+  dbt-build:
+    <<: *dbt-common
+    command: dbt build
+
+  dbt-docs:
+    <<: *dbt-common
+    command: bash -c "dbt docs generate && dbt docs serve --port 8081"
+    ports:
+      - "8081:8081"

@@ -11,12 +11,17 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/secrets/service-account.json
+  group_add:
+    - "${DOCKER_GID}"
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
     - ../secrets:/opt/airflow/secrets:ro
     - ./data:/tmp/data
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./dbt:/opt/airflow/dbt
+
   depends_on:
     postgres:
       condition: service_healthy
@@ -66,6 +71,18 @@ services:
   airflow-init:
     <<: *airflow-common
     command: bash -c "airflow db init && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email papiconstantinos@gmail.com"
+
+  dbt:
+    build:
+      context: ./dbt
+      dockerfile: Dockerfile
+    image: dez-dbt:latest
+    volumes:
+      - ./dbt:/dbt
+      - ../secrets:/secrets:ro
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/service-account.json
+    profiles: ["dbt"]
 
 volumes:
   postgres-db-volume:

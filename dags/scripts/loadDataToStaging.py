@@ -4,7 +4,7 @@ from google.cloud import bigquery
 
 log = logging.getLogger(__name__)
 
-CHUNK_SIZE = 50_000
+CHUNK_SIZE = 5000
 
 def _cast_chunk(chunk, bq_schema):
     for field in bq_schema:
@@ -23,7 +23,7 @@ def _cast_chunk(chunk, bq_schema):
             log.warning(f"Could not cast column {field.name} ({field.field_type}): {e}")
     return chunk
 
-def loadDataToStaging(files, dataset_id='staging', project_id='dataengineeringproject-491413'):
+def loadDataToStaging(files, dataset_id='staging', project_id='dataengineeringproject-493216'):
     """
         Receives the list of local file paths downloaded by task1,
         reads each file in chunks, casts columns to match the BigQuery table schema,
@@ -50,7 +50,10 @@ def loadDataToStaging(files, dataset_id='staging', project_id='dataengineeringpr
         else:
             total = 0
             for i, chunk in enumerate(pd.read_csv(file, encoding='latin-1', chunksize=CHUNK_SIZE)):
-                chunk = chunk.dropna()
+
+                if chunk.empty:
+                    log.info(f"Chunk {i+1}: skipped (empty after cleaning)")
+                    continue
                 chunk = _cast_chunk(chunk, bq_schema)
                 client.load_table_from_dataframe(chunk, table_ref, job_config=job_config).result()
                 total += len(chunk)

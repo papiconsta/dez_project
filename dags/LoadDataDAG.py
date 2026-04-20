@@ -23,7 +23,7 @@ def task1_wrapper():
 
     # return value gets stored in XCom automatically
     num_files = getDataFromBucketToLocal(
-        bucket_name="demo-bucket-terraform-project-a15ee64e-db9e-4b3a-879",
+        bucket_name="dataengineeringproject-493216-raw-zone",
         directory="/tmp/data/"
     )
     return num_files

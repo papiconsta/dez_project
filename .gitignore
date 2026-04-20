@@ -9,14 +9,31 @@ data/
 
 # Airflow logs
 logs/
+plugins/
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 .env
+venv/
+.venv/
+*.egg-info/
 
-# Jupyter
-notebooks/.ipynb_checkpoints/
-notebooks/.venv/
-notebooks/uv.lock
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+dbt/.user.yml
+dbt/.venv/
+dbt/uv.lock
+
+# Streamlit
+streamlit/**/.venv/
+
+# Docker
+*.override.yml
+
+# OS
+.DS_Store
+Thumbs.db

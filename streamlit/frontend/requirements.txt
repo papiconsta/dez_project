@@ -1,0 +1,6 @@
+streamlit
+google-cloud-bigquery
+google-cloud-bigquery-storage
+pandas
+pyarrow
+python-dotenv

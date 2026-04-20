@@ -1,0 +1,17 @@
+{{ config(materialized='table') }}
+
+select
+    description,
+    count(*)                                  as total_contracts,
+    round(sum(gen_effective_total_value), 2)  as total_spend,
+    round(avg(gen_effective_total_value), 2)  as avg_contract_value,
+    count(distinct gen_vendor_normalized)     as unique_vendors,
+    count(distinct owner_acronym)             as unique_departments
+
+from {{ ref('query_1') }}
+
+where description is not null
+  and gen_effective_total_value is not null
+
+group by description
+order by total_spend desc

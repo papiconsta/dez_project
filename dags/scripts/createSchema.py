@@ -17,7 +17,7 @@ DTYPE_TO_BQ = {
     'datetime64[us, UTC]':   'TIMESTAMP',
 }
 
-def getDataFromLocalForSchemaExtractionAndCreateTableToBigQuery(files, dataset_id='staging', project_id='dataengineeringproject-491413'):
+def getDataFromLocalForSchemaExtractionAndCreateTableToBigQuery(files, dataset_id='staging', project_id='dataengineeringproject-493216'):
     """
         Receives the list of local file paths downloaded by task1,
         reads each file, extracts its schema, and creates a table in BigQuery.

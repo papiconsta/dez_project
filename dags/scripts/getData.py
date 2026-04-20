@@ -17,7 +17,7 @@ def getDataFromBucketToLocal(bucket_name,directory):
     os.makedirs(directory, exist_ok=True)
 
     # connects using your gcloud auth
-    client = storage.Client(project="dataengineeringproject-491413")
+    client = storage.Client(project="dataengineeringproject-493216")
 
     # check connection
     log.info(f"Connected to project: {client.project}")
