@@ -1,6 +1,6 @@
 # Canadian Government Contracts — Data Engineering Pipeline
 
-![alt text](image.png)
+![alt text](/images/image.png)
 
 An end-to-end data engineering project that ingests, transforms, and visualizes Canadian government contract data using industry-standard tools.
 
